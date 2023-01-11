@@ -1,0 +1,19 @@
+.dropdown-menu {
+    width: 100%;
+}
+
+span.text {
+    font-size: 12px;
+}
+
+.bs-select-all {
+    font-size: 12px;
+}
+
+.bs-deselect-all {
+    font-size: 12px;
+}
+
+input.form-control {
+    font-size: 12px;
+}

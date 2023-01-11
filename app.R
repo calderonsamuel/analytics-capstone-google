@@ -161,10 +161,10 @@ ui <- page_fluid(
         layout_column_wrap(
             width = 1/2,
             fill = FALSE,
-            plotlyOutput("plot1"),
-            plotlyOutput("plot2"),
-            plotlyOutput("plot3"),
-            plotlyOutput("plot4"),
+            plotlyOutput("plot_reglamento"),
+            plotlyOutput("plot_condicion"),
+            plotlyOutput("plot_nivel"),
+            plotlyOutput("plot_genero"),
         )
     )
     
@@ -183,25 +183,33 @@ server <- function(input, output, session) {
             )
     })
     
-    output$plot1 <- renderPlotly({
+    plot_reglamento <- reactive({
         inv_data() |> 
             plotlyfy(reglamento, "Reglamento con el que se registró")
     })
     
-    output$plot2 <- renderPlotly({
+    plot_condicion <- reactive({
         inv_data() |> 
             plotlyfy(condicion, "Condición del registro")
     })
     
-    output$plot3 <- renderPlotly({
+    plot_nivel <- reactive({
         inv_data() |> 
             plotlyfy(nivel, "Nivel obtenido")
     })
     
-    output$plot4 <- renderPlotly({
+    plot_genero <- reactive({
         inv_data() |> 
             plotlyfy(genero, "Género registrado")
     })
+    
+    output$plot_reglamento <- renderPlotly(plot_reglamento())
+    
+    output$plot_condicion <- renderPlotly(plot_condicion())
+    
+    output$plot_nivel <- renderPlotly(plot_nivel())
+    
+    output$plot_genero <- renderPlotly(plot_genero())
     
 }
 

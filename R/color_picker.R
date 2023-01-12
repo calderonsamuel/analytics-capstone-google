@@ -8,9 +8,10 @@ color_picker <- function(inputId, label, selected) {
             hex= FALSE,
             rgba = FALSE,
             input = TRUE,
-            save = TRUE,
+            save = FALSE,
             clear = FALSE
-        ),
-        hideOnSave = TRUE
+        ), 
+        update = "changestop", 
+        width = "100%"
     )
 }

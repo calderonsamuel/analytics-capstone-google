@@ -125,7 +125,7 @@ ui <- page_fluid(
                         color_picker(
                             "color_bg", "Color de fondo", '#ffffff'
                         ),
-                        sliderInput("size_title", "Tamaño de título", 8, 30, 16)
+                        sliderInput("size_title", "Tamaño de título", 8, 30, 16, width = "100%")
                     )
                 ),
                 accordion_item(

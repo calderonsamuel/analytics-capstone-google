@@ -1,0 +1,123 @@
+---
+title: "Explorador RENACYT"
+subtitle: Reporte de estadísticas institucionales
+output: word_document
+params:
+  instituciones: z
+  reglamento: a
+  condicion: b
+  nivel: c
+  genero: d
+  fecha: "2022-01-11"
+  grafico_reglamento: a
+  grafico_condicion: b
+  grafico_nivel: c
+  grafico_genero: d
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = FALSE,
+	message = FALSE,
+	warning = FALSE,
+	results = 'asis'
+)
+```
+
+```{r}
+print_plotly <- function(plot) {
+    widget_file <- tempfile(fileext = ".html")
+    png_file <- tempfile(fileext = ".png")
+    
+    htmlwidgets::saveWidget(plot, file = widget_file)
+    webshot2::webshot(widget_file, png_file, 
+                      vwidth = 800, vheight = 450)
+    
+    knitr::include_graphics(png_file)
+}
+```
+
+
+
+## Filtros seleccionados
+
+```{r, results='markup'}
+list2markdown <- function(l) {
+    collapsed <-  glue::glue_collapse(l, sep = ", ", last = " y ")
+        
+    cat(paste0("- ", collapsed, collapse = "\n"))
+}
+```
+
+
+Instituciones:
+
+```{r}
+params$instituciones |> 
+    list2markdown()
+```
+
+
+Reglamento:
+
+```{r}
+params$reglamento |> 
+    list2markdown()
+```
+
+Condición:
+
+```{r}
+params$condicion |> 
+    list2markdown()
+```
+
+Nivel:
+
+```{r}
+params$nivel |> 
+    list2markdown()
+```
+
+Género:
+
+```{r}
+params$genero |> 
+    list2markdown()
+```
+
+
+Fecha de descarga: `r params$fecha`
+
+\pagebreak
+
+## Gráficos
+
+Los valores según reglamento se distribuyen así:
+
+```{r}
+# plotly::plot_ly(ggplot2::economics, x = ~date, y = ~unemploy / pop) |> 
+params$grafico_reglamento |> 
+    print_plotly()
+```
+
+Los valores según condición de registro se distribuyen así:
+
+```{r}
+params$grafico_condicion |> 
+    print_plotly()
+```
+
+Los valores según nivel alcanzado se distribuyen así:
+
+```{r}
+params$grafico_nivel |> 
+    print_plotly()
+```
+
+Los valores según género se distribuyen así:
+
+```{r}
+params$grafico_genero |> 
+    print_plotly()
+```

@@ -5,9 +5,9 @@ account: samuelcalderon01
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 8014529
-bundleId: 6722612
+bundleId: 6723790
 url: https://samuelcalderon01.shinyapps.io/analytics-capstone-google/
-when: 1673460146.53717
-lastSyncTime: 1673460146.53717
+when: 1673481840.36038
+lastSyncTime: 1673481840.36039
 asMultiple: FALSE
 asStatic: FALSE

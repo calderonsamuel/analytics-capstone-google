@@ -23,6 +23,7 @@ choices_genero <- levels(investigadores$genero)
 ui <- page_fluid(
     title = "RENACYT",
     class = "p-3",
+    theme = bs_theme(version = 5, bootswatch = "sandstone"),
     tags$head(
         tags$link(rel = "stylesheet", type = "text/css", href = "styles.css")
     ),
@@ -38,15 +39,18 @@ ui <- page_fluid(
             accordion(
                 accordion_item(
                     accordion_header(
-                        h2("Explorador RENACYT")
+                        h1("Explorador RENACYT")
                     ),
-                    accordion_body("Texto de bienvenida")
+                    accordion_body(
+                        includeMarkdown("welcome.md")
+                    )
                 ),
                 accordion_item(
                     accordion_header(
                         span(fa("fas fa-filter"), "Filtros")
                     ),
                     accordion_body(
+                        class = "p-0",
                         pickerInput(
                             inputId = "institucion",
                             width = "100%",
@@ -69,7 +73,7 @@ ui <- page_fluid(
                                 width = "100%"
                             ), 
                             multiple = TRUE
-                        ),
+                        ) |> tagAppendAttributes(class = "p-3 m-0"),
                         pickerInput(
                             inputId = "reglamento", 
                             width = "100%",
@@ -77,7 +81,7 @@ ui <- page_fluid(
                             choices = choices_reglamento,
                             selected = choices_reglamento,
                             multiple = TRUE
-                        ),
+                        )|> tagAppendAttributes(class = "p-3 m-0", style = "background-color: #f2f4f4;"),
                         pickerInput(
                             inputId = "condicion",
                             width = "100%",
@@ -88,7 +92,7 @@ ui <- page_fluid(
                                 `actions-box` = TRUE,
                                 `live-search` = TRUE), 
                             multiple = TRUE
-                        ),
+                        )|> tagAppendAttributes(class = "p-3 m-0"),
                         pickerInput(
                             inputId = "nivel",
                             width = "100%",
@@ -100,15 +104,15 @@ ui <- page_fluid(
                                 size = 3,
                                 `live-search` = TRUE), 
                             multiple = TRUE
-                        ),
+                        )|> tagAppendAttributes(class = "p-3 m-0", style = "background-color: #f2f4f4;"),
                         pickerInput(
                             inputId = "genero", 
                             width = "100%",
-                            label = "Reglamento",
+                            label = "Género",
                             choices = choices_genero,
                             selected = choices_genero,
                             multiple = TRUE
-                        ),
+                        )|> tagAppendAttributes(class = "p-3 m-0"),
                     )
                 ),
                 accordion_item(
@@ -139,9 +143,11 @@ ui <- page_fluid(
                 ),
                 accordion_item(
                     accordion_header(
-                        span(fa("fas fa-circle-info"), "Info")
+                        span(fa("fas fa-circle-info"), "Info / Reporta errores")
                     ),
-                    accordion_body("inner text 2")
+                    accordion_body(
+                        includeMarkdown("info.md")
+                    )
                 )
             )
         ),
@@ -226,6 +232,8 @@ server <- function(input, output, session) {
     output$advertencia <- renderText({
         if (length(input$institucion) > 10) {
             "Advertencia: Seleccionar más de 20 instituciones puede generar un listado muy extenso en la sección 'Filtros'"
+        } else {
+            "¡Solo necesitas presionar el botón!"
         }
     })
 

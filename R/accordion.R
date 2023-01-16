@@ -29,7 +29,9 @@ accordion <- function(..., flush = FALSE, always_open = FALSE) {
 }
 
 
-accordion_item <- function(header = accordion_header(), body = accordion_body()) {
+accordion_item <- function(header = accordion_header(), 
+                           body = accordion_body(), 
+                           start_open = FALSE) {
     output <- div(
         class = "accordion-item",
         header,
@@ -49,6 +51,7 @@ accordion_item <- function(header = accordion_header(), body = accordion_body())
         removeAttrs("id")$
         addAttrs(id = heading_id)
     
+    
     tq_header_linked <- tq_header_id$
         children(".accordion-button")$
         removeAttrs(c("data-bs-target", "aria-controls"))$
@@ -57,11 +60,23 @@ accordion_item <- function(header = accordion_header(), body = accordion_body())
             `aria-controls` = collapse_id
         )
     
+    if (start_open) {
+        tq_header_linked <- tq_header_linked$
+            removeClass("collapsed")$
+            removeAttrs("aria-expanded")$
+            addAttrs(`aria-expanded` = "true")
+            
+    }
+    
     tq_collapse_linked <- tq_header_linked$
         parent()$
         sibling(".accordion-collapse")$
         removeAttrs(c("id", "aria-labelledby"))$
         addAttrs(id = collapse_id, `aria-labelledby` = heading_id)
+    
+    if (start_open) {
+        tq_collapse_linked <- tq_collapse_linked$addClass("show")
+    }
     
     tq_collapse_linked$allTags()
     

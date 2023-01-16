@@ -38,6 +38,7 @@ ui <- page_fluid(
             class = "border-light",
             accordion(
                 accordion_item(
+                    start_open = TRUE,
                     accordion_header(
                         h1("Explorador RENACYT")
                     ),
